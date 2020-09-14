@@ -1,7 +1,8 @@
 const question = document.getElementById("question");
 const choices = Array.from(document.getElementsByClassName("choice-text"));
-
-
+const progressText = document.getElementById('progressText');
+const progressBarFull = document.getElementById('progressBarFull');
+const scoreText = document.getElementById('score');
 let currQuestion = {};
 let acceptAns = false;
 let score = 0;
@@ -39,7 +40,7 @@ let questions = [
         choice2: "Green",
         choice3: "White",
         choice4: "Yellow",
-        answer:  2
+        answer:  1
     }
 ]
 
@@ -56,11 +57,15 @@ startGame = () => {
 
 nextQuestion = () => {
     if (availableQuestions.length == 0 || questionCounter >= maxQuestions){
+        localStorage.setItem('recentScore', score);
         //Go to end page
         return window.location.assign('/end.html');
     }
 
     questionCounter++;
+    progressText.innerText = 'Question ' + questionCounter + '/' + maxQuestions;
+    //Update progress Bar
+    progressBarFull.style.width = (questionCounter/maxQuestions)*100 + '%';
     const questionIndex = Math.floor(Math.random() * availableQuestions.length);
     currQuestion = availableQuestions[questionIndex];
     question.innerText = currQuestion.question;
@@ -81,9 +86,21 @@ choices.forEach(choice => {
         acceptAns = false
         const selectedChoice = e.target;
         const answer = selectedChoice.dataset['number'];
-        console.log(answer);
-        nextQuestion();
+        const classToApply = answer == currQuestion.answer ? 'correct':'incorrect';
+        if (classToApply == 'correct') {
+            incrementScore(correctBonus);
+        }
+        selectedChoice.parentElement.classList.add(classToApply);
+        setTimeout(() => {
+            selectedChoice.parentElement.classList.remove(classToApply);
+            nextQuestion();
+        }, 800);
     });
 });
+
+incrementScore = num => {
+    score += num;
+    scoreText.innerText = score;
+}
 
 startGame();
