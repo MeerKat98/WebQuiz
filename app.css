@@ -1,5 +1,5 @@
 :root {
-    background-color: #ecf5ff ;
+    background-color: #aaf1a3 ;
     font-size: 62.5%;    
 }
 
@@ -75,16 +75,16 @@ h3 {
     padding: 1rem 0;
     width: 20rem;
     text-align: center;
-    border: 0.2rem solid #228b22;
     margin-bottom: 1rem;
     text-decoration: none;
-    color: #228b22;
-    background-color: #ecf5ff;
+    color: #eeeeee;
+    background-color: #228b22;
+    border: 0.2rem solid #228b22;
 }
 
 .btn:hover {
     cursor: pointer;
-    box-shadow: 0.5rem 0.5rem 1rem 0.1rem rgb(0, 143, 12);
+    box-shadow: 0.5rem 0.5rem 1rem 0.1rem #102510;
     transform: translateY(-0.1rem);
     transition: transform 150ms;
 }
