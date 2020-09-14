@@ -1,0 +1,96 @@
+:root {
+    background-color: #ecf5ff ;
+    font-size: 62.5%;    
+}
+
+*{
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h1{
+    font-size: 5.5rem;
+    color: #228b22;
+    margin-bottom: 5rem;
+}
+
+h2 {
+    font-size: 4.2rem;
+    margin-bottom: 4rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+h3 {
+    font-size: 3rem;
+    font-weight: 500;
+}
+
+/* Utilities */
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.container > * {
+    width: 100%;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Buttons */
+
+.btn {
+    font-size: 2rem;
+    padding: 1rem 0;
+    width: 20rem;
+    text-align: center;
+    border: 0.2rem solid #228b22;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: #228b22;
+    background-color: #ecf5ff;
+}
+
+.btn:hover {
+    cursor: pointer;
+    box-shadow: 0.5rem 0.5rem 1rem 0.1rem rgb(0, 143, 12);
+    transform: translateY(-0.1rem);
+    transition: transform 150ms;
+}
+
+.btn[disabled]:hover {
+    cursor: none;
+    box-shadow: none;
+    transform: none;
+}
