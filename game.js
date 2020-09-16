@@ -3,6 +3,8 @@ const choices = Array.from(document.getElementsByClassName("choice-text"));
 const progressText = document.getElementById('progressText');
 const progressBarFull = document.getElementById('progressBarFull');
 const scoreText = document.getElementById('score');
+const game = document.getElementById('game');
+const loader = document.getElementById('loader');
 
 let currQuestion = {};
 let acceptAns = false;
@@ -10,54 +12,46 @@ let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
 
-let questions = [
-    {
-        question: "What...is your name?", 
-        choice1: "Alfred",
-        choice2: "Bruce Wayne",
-        choice3: "Candice",
-        choice4: "Devan",
-        answer:  4
-    },
-    {
-        question: "What...is your quest?", 
-        choice1: "Seek treasure",
-        choice2: "Slay the King",
-        choice3: "Find the Holy Grail",
-        choice4: "Finding a dealer",
-        answer:  3
-    },
-    {
-        question: "What...is the airspeed velocity of a sparrow?", 
-        choice1: "5",
-        choice2: "12 knots",
-        choice3: "African of European?",
-        choice4: "52.33 mph",
-        answer:  3
-    },
-    {
-        question: "What...is color is this question?", 
-        choice1: "Black",
-        choice2: "Green",
-        choice3: "White",
-        choice4: "Yellow",
-        answer:  1
-    }
-]
+let questions = [];
+
+//Get data from API
+fetch("https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple").then( res => {
+    return res.json();
+})
+.then(loadedQuestions => {
+    questions = loadedQuestions.results.map( singleQ => {
+        const questionSet = {
+            question: singleQ.question
+        };
+        const availableChoices = [...singleQ.incorrect_answers];
+        questionSet.answer = Math.floor(Math.random() * 4) + 1;
+        availableChoices.splice(questionSet.answer-1,0, singleQ.correct_answer);
+        availableChoices.forEach((choice, index) => {
+            questionSet["choice" + (index +1)] = choice;
+        });
+        return questionSet;
+    })
+    startGame();
+})
+.catch(err => {
+    console.log(err);
+});
 
 //Constants
 const correctBonus = 10;
-const maxQuestions = 3;
+const maxQuestions = 5;
 
 startGame = () => {
     questionCounter = 0;
     score = 0;
     availableQuestions = [...questions];
+    loader.classList.add('hidden');
+    game.classList.remove('hidden');
     nextQuestion();
 };
 
 nextQuestion = () => {
-    if (availableQuestions.length == 0 || questionCounter >= maxQuestions){
+    if (/*availableQuestions.length == 0 ||*/ questionCounter >= maxQuestions){
         localStorage.setItem('recentScore', score);
         //Go to end page
         return window.location.assign('/end.html');
@@ -102,6 +96,4 @@ choices.forEach(choice => {
 incrementScore = num => {
     score += num;
     scoreText.innerText = score;
-}
-
-startGame();
+};
